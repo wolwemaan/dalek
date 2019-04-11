@@ -1,6 +1,6 @@
 USE [master]
 GO
-/****** Object:  Database [Dalek_Smallville]    Script Date: 4/10/2019 11:04:41 PM ******/
+/****** Object:  Database [Dalek_Smallville]    Script Date: 4/10/2019 11:39:59 PM ******/
 CREATE DATABASE [Dalek_Smallville]
  CONTAINMENT = NONE
  ON  PRIMARY 
@@ -77,101 +77,22 @@ ALTER DATABASE [Dalek_Smallville] SET QUERY_STORE = OFF
 GO
 USE [Dalek_Smallville]
 GO
-/****** Object:  Table [dbo].[Assignment]    Script Date: 4/10/2019 11:04:41 PM ******/
+/****** Object:  Table [dbo].[Supplier]    Script Date: 4/10/2019 11:40:00 PM ******/
 SET ANSI_NULLS ON
 GO
 SET QUOTED_IDENTIFIER ON
 GO
-CREATE TABLE [dbo].[Assignment](
-	[CustomerNumber] [int] NOT NULL,
-	[EmployeeID] [int] NOT NULL,
- CONSTRAINT [CPK_Assignment] PRIMARY KEY CLUSTERED 
-(
-	[CustomerNumber] ASC,
-	[EmployeeID] ASC
-)WITH (PAD_INDEX = OFF, STATISTICS_NORECOMPUTE = OFF, IGNORE_DUP_KEY = OFF, ALLOW_ROW_LOCKS = ON, ALLOW_PAGE_LOCKS = ON) ON [PRIMARY]
-) ON [PRIMARY]
-GO
-/****** Object:  Table [dbo].[Customer]    Script Date: 4/10/2019 11:04:42 PM ******/
-SET ANSI_NULLS ON
-GO
-SET QUOTED_IDENTIFIER ON
-GO
-CREATE TABLE [dbo].[Customer](
-	[CustomerNumber] [int] IDENTITY(100,1) NOT NULL,
-	[FirstName] [varchar](20) NOT NULL,
-	[LastName] [varchar](30) NOT NULL,
+CREATE TABLE [dbo].[Supplier](
+	[CompanyID] [int] IDENTITY(100,1) NOT NULL,
+	[CompanyName] [varchar](50) NOT NULL,
 	[Street] [varchar](30) NOT NULL,
 	[City] [varchar](30) NOT NULL,
-	[PhoneNumber] [varchar](14) NOT NULL,
-	[State] [char](2) NOT NULL,
-	[ZipCode] [char](5) NOT NULL
+	[State] [varchar](2) NOT NULL,
+	[ZipCode] [varchar](5) NOT NULL,
+	[PhoneNumber] [varchar](14) NOT NULL
 ) ON [PRIMARY]
 GO
-/****** Object:  Table [dbo].[Employee]    Script Date: 4/10/2019 11:04:42 PM ******/
-SET ANSI_NULLS ON
-GO
-SET QUOTED_IDENTIFIER ON
-GO
-CREATE TABLE [dbo].[Employee](
-	[EmployeeID] [int] IDENTITY(100,1) NOT NULL,
-	[FirstName] [varchar](20) NOT NULL,
-	[LastName] [varchar](30) NOT NULL,
-	[EmailAddress] [varchar](40) NOT NULL,
-	[Street] [varchar](30) NOT NULL,
-	[City] [varchar](30) NOT NULL,
-	[State] [char](2) NOT NULL,
-	[PhoneNumber] [varchar](14) NOT NULL,
-	[EmploymentType] [varchar](20) NOT NULL,
-	[ZipCode] [char](5) NOT NULL
-) ON [PRIMARY]
-GO
-/****** Object:  Table [dbo].[HourlyEmployee]    Script Date: 4/10/2019 11:04:42 PM ******/
-SET ANSI_NULLS ON
-GO
-SET QUOTED_IDENTIFIER ON
-GO
-CREATE TABLE [dbo].[HourlyEmployee](
-	[EmployeeID] [int] IDENTITY(100,1) NOT NULL,
-	[HoursPerDay] [char](2) NOT NULL,
-	[Compensation] [smallmoney] NOT NULL
-) ON [PRIMARY]
-GO
-/****** Object:  Table [dbo].[Order]    Script Date: 4/10/2019 11:04:42 PM ******/
-SET ANSI_NULLS ON
-GO
-SET QUOTED_IDENTIFIER ON
-GO
-CREATE TABLE [dbo].[Order](
-	[OrderNumber] [int] NOT NULL,
-	[OrderDate] [date] NOT NULL,
-	[OrderStatus] [varchar](50) NOT NULL,
-	[CustomerNumber] [int] IDENTITY(100,1) NOT NULL,
- CONSTRAINT [PK_Order] PRIMARY KEY CLUSTERED 
-(
-	[OrderNumber] ASC
-)WITH (PAD_INDEX = OFF, STATISTICS_NORECOMPUTE = OFF, IGNORE_DUP_KEY = OFF, ALLOW_ROW_LOCKS = ON, ALLOW_PAGE_LOCKS = ON) ON [PRIMARY]
-) ON [PRIMARY]
-GO
-/****** Object:  Table [dbo].[OrderLine]    Script Date: 4/10/2019 11:04:42 PM ******/
-SET ANSI_NULLS ON
-GO
-SET QUOTED_IDENTIFIER ON
-GO
-CREATE TABLE [dbo].[OrderLine](
-	[OrderNumber] [int] NOT NULL,
-	[ProductNumber] [int] NOT NULL,
-	[QuantityOrdered] [smallint] NOT NULL,
-	[QuantitySupplied] [smallint] NOT NULL,
-	[QuantityPrice] [smallmoney] NOT NULL,
- CONSTRAINT [CPK_OrderLine_Order_Product] PRIMARY KEY CLUSTERED 
-(
-	[OrderNumber] ASC,
-	[ProductNumber] ASC
-)WITH (PAD_INDEX = OFF, STATISTICS_NORECOMPUTE = OFF, IGNORE_DUP_KEY = OFF, ALLOW_ROW_LOCKS = ON, ALLOW_PAGE_LOCKS = ON) ON [PRIMARY]
-) ON [PRIMARY]
-GO
-/****** Object:  Table [dbo].[Product]    Script Date: 4/10/2019 11:04:42 PM ******/
+/****** Object:  Table [dbo].[Product]    Script Date: 4/10/2019 11:40:00 PM ******/
 SET ANSI_NULLS ON
 GO
 SET QUOTED_IDENTIFIER ON
@@ -183,28 +104,7 @@ CREATE TABLE [dbo].[Product](
 	[QuantityOnHand] [smallint] NOT NULL
 ) ON [PRIMARY]
 GO
-/****** Object:  Table [dbo].[SalaryEmployee]    Script Date: 4/10/2019 11:04:42 PM ******/
-SET ANSI_NULLS ON
-GO
-SET QUOTED_IDENTIFIER ON
-GO
-CREATE TABLE [dbo].[SalaryEmployee](
-	[EmployeeID] [int] IDENTITY(100,1) NOT NULL,
-	[Salary] [money] NOT NULL
-) ON [PRIMARY]
-GO
-/****** Object:  Table [dbo].[SalesRepresentative]    Script Date: 4/10/2019 11:04:42 PM ******/
-SET ANSI_NULLS ON
-GO
-SET QUOTED_IDENTIFIER ON
-GO
-CREATE TABLE [dbo].[SalesRepresentative](
-	[EmployeeID] [int] IDENTITY(100,1) NOT NULL,
-	[CommissionRate] [smallmoney] NOT NULL,
-	[SalesMade] [int] NOT NULL
-) ON [PRIMARY]
-GO
-/****** Object:  Table [dbo].[Shipment]    Script Date: 4/10/2019 11:04:42 PM ******/
+/****** Object:  Table [dbo].[Shipment]    Script Date: 4/10/2019 11:40:00 PM ******/
 SET ANSI_NULLS ON
 GO
 SET QUOTED_IDENTIFIER ON
@@ -222,58 +122,189 @@ CREATE TABLE [dbo].[Shipment](
 )WITH (PAD_INDEX = OFF, STATISTICS_NORECOMPUTE = OFF, IGNORE_DUP_KEY = OFF, ALLOW_ROW_LOCKS = ON, ALLOW_PAGE_LOCKS = ON) ON [PRIMARY]
 ) ON [PRIMARY]
 GO
-/****** Object:  Table [dbo].[Supplier]    Script Date: 4/10/2019 11:04:42 PM ******/
+/****** Object:  View [dbo].[ProductDetails_vw]    Script Date: 4/10/2019 11:40:00 PM ******/
 SET ANSI_NULLS ON
 GO
 SET QUOTED_IDENTIFIER ON
 GO
-CREATE TABLE [dbo].[Supplier](
-	[CompanyID] [int] IDENTITY(100,1) NOT NULL,
-	[CompanyName] [varchar](50) NOT NULL,
-	[Street] [varchar](30) NOT NULL,
-	[City] [varchar](30) NOT NULL,
-	[State] [varchar](2) NOT NULL,
-	[ZipCode] [varchar](5) NOT NULL,
-	[PhoneNumber] [varchar](14) NOT NULL
+create view [dbo].[ProductDetails_vw] as
+select
+   P.ProductNumber, NumberOfUnits Units, ListPrice, DateOfOrder [Date], S.CompanyName [Company]
+
+FROM Product P
+LEFT JOIN Shipment SH on P.ProductNumber = SH.ProductNumber 
+LEFT JOIN Supplier S ON SH.CompanyID = S.CompanyID
+
+GO
+/****** Object:  Table [dbo].[Assignment]    Script Date: 4/10/2019 11:40:00 PM ******/
+SET ANSI_NULLS ON
+GO
+SET QUOTED_IDENTIFIER ON
+GO
+CREATE TABLE [dbo].[Assignment](
+	[CustomerNumber] [int] NOT NULL,
+	[EmployeeID] [int] NOT NULL,
+ CONSTRAINT [CPK_Assignment] PRIMARY KEY CLUSTERED 
+(
+	[CustomerNumber] ASC,
+	[EmployeeID] ASC
+)WITH (PAD_INDEX = OFF, STATISTICS_NORECOMPUTE = OFF, IGNORE_DUP_KEY = OFF, ALLOW_ROW_LOCKS = ON, ALLOW_PAGE_LOCKS = ON) ON [PRIMARY]
 ) ON [PRIMARY]
 GO
-/****** Object:  Index [PK_Customer_CustomerNo]    Script Date: 4/10/2019 11:04:42 PM ******/
+/****** Object:  Table [dbo].[Customer]    Script Date: 4/10/2019 11:40:00 PM ******/
+SET ANSI_NULLS ON
+GO
+SET QUOTED_IDENTIFIER ON
+GO
+CREATE TABLE [dbo].[Customer](
+	[CustomerNumber] [int] IDENTITY(100,1) NOT NULL,
+	[FirstName] [varchar](20) NOT NULL,
+	[LastName] [varchar](30) NOT NULL,
+	[Street] [varchar](30) NOT NULL,
+	[City] [varchar](30) NOT NULL,
+	[PhoneNumber] [varchar](14) NOT NULL,
+	[State] [char](2) NOT NULL,
+	[ZipCode] [char](5) NOT NULL
+) ON [PRIMARY]
+GO
+/****** Object:  Table [dbo].[Employee]    Script Date: 4/10/2019 11:40:00 PM ******/
+SET ANSI_NULLS ON
+GO
+SET QUOTED_IDENTIFIER ON
+GO
+CREATE TABLE [dbo].[Employee](
+	[EmployeeID] [int] IDENTITY(100,1) NOT NULL,
+	[FirstName] [varchar](20) NOT NULL,
+	[LastName] [varchar](30) NOT NULL,
+	[EmailAddress] [varchar](40) NOT NULL,
+	[Street] [varchar](30) NOT NULL,
+	[City] [varchar](30) NOT NULL,
+	[State] [char](2) NOT NULL,
+	[PhoneNumber] [varchar](14) NOT NULL,
+	[EmploymentType] [varchar](20) NOT NULL,
+	[ZipCode] [char](5) NOT NULL
+) ON [PRIMARY]
+GO
+/****** Object:  Table [dbo].[HourlyEmployee]    Script Date: 4/10/2019 11:40:00 PM ******/
+SET ANSI_NULLS ON
+GO
+SET QUOTED_IDENTIFIER ON
+GO
+CREATE TABLE [dbo].[HourlyEmployee](
+	[EmployeeID] [int] IDENTITY(100,1) NOT NULL,
+	[HoursPerDay] [char](2) NOT NULL,
+	[Compensation] [smallmoney] NOT NULL
+) ON [PRIMARY]
+GO
+/****** Object:  Table [dbo].[Order]    Script Date: 4/10/2019 11:40:00 PM ******/
+SET ANSI_NULLS ON
+GO
+SET QUOTED_IDENTIFIER ON
+GO
+CREATE TABLE [dbo].[Order](
+	[OrderNumber] [int] NOT NULL,
+	[OrderDate] [date] NOT NULL,
+	[OrderStatus] [varchar](50) NOT NULL,
+	[CustomerNumber] [int] IDENTITY(100,1) NOT NULL,
+ CONSTRAINT [PK_Order] PRIMARY KEY CLUSTERED 
+(
+	[OrderNumber] ASC
+)WITH (PAD_INDEX = OFF, STATISTICS_NORECOMPUTE = OFF, IGNORE_DUP_KEY = OFF, ALLOW_ROW_LOCKS = ON, ALLOW_PAGE_LOCKS = ON) ON [PRIMARY]
+) ON [PRIMARY]
+GO
+/****** Object:  Table [dbo].[OrderLine]    Script Date: 4/10/2019 11:40:00 PM ******/
+SET ANSI_NULLS ON
+GO
+SET QUOTED_IDENTIFIER ON
+GO
+CREATE TABLE [dbo].[OrderLine](
+	[OrderNumber] [int] NOT NULL,
+	[ProductNumber] [int] NOT NULL,
+	[QuantityOrdered] [smallint] NOT NULL,
+	[QuantitySupplied] [smallint] NOT NULL,
+	[QuantityPrice] [smallmoney] NOT NULL,
+ CONSTRAINT [CPK_OrderLine_Order_Product] PRIMARY KEY CLUSTERED 
+(
+	[OrderNumber] ASC,
+	[ProductNumber] ASC
+)WITH (PAD_INDEX = OFF, STATISTICS_NORECOMPUTE = OFF, IGNORE_DUP_KEY = OFF, ALLOW_ROW_LOCKS = ON, ALLOW_PAGE_LOCKS = ON) ON [PRIMARY]
+) ON [PRIMARY]
+GO
+/****** Object:  Table [dbo].[SalaryEmployee]    Script Date: 4/10/2019 11:40:00 PM ******/
+SET ANSI_NULLS ON
+GO
+SET QUOTED_IDENTIFIER ON
+GO
+CREATE TABLE [dbo].[SalaryEmployee](
+	[EmployeeID] [int] IDENTITY(100,1) NOT NULL,
+	[Salary] [money] NOT NULL
+) ON [PRIMARY]
+GO
+/****** Object:  Table [dbo].[SalesRepresentative]    Script Date: 4/10/2019 11:40:00 PM ******/
+SET ANSI_NULLS ON
+GO
+SET QUOTED_IDENTIFIER ON
+GO
+CREATE TABLE [dbo].[SalesRepresentative](
+	[EmployeeID] [int] IDENTITY(100,1) NOT NULL,
+	[CommissionRate] [smallmoney] NOT NULL,
+	[SalesMade] [int] NOT NULL
+) ON [PRIMARY]
+GO
+SET IDENTITY_INSERT [dbo].[Product] ON 
+
+INSERT [dbo].[Product] ([ProductNumber], [ProductDescription], [ListPrice], [QuantityOnHand]) VALUES (100, N'Red striped shirt.', 13.0000, 12)
+INSERT [dbo].[Product] ([ProductNumber], [ProductDescription], [ListPrice], [QuantityOnHand]) VALUES (101, N'Blue pants.', 22.0000, 35)
+INSERT [dbo].[Product] ([ProductNumber], [ProductDescription], [ListPrice], [QuantityOnHand]) VALUES (102, N'Yellow lace-up shoes.', 30.0000, 19)
+SET IDENTITY_INSERT [dbo].[Product] OFF
+INSERT [dbo].[Shipment] ([ProductNumber], [CompanyID], [CompanyName], [DateOfOrder], [NumberOfUnits]) VALUES (100, 116, N'Shirts Co.', CAST(N'2019-03-05' AS Date), 10)
+INSERT [dbo].[Shipment] ([ProductNumber], [CompanyID], [CompanyName], [DateOfOrder], [NumberOfUnits]) VALUES (101, 115, N'Clothes Co.', CAST(N'2019-02-13' AS Date), 25)
+INSERT [dbo].[Shipment] ([ProductNumber], [CompanyID], [CompanyName], [DateOfOrder], [NumberOfUnits]) VALUES (101, 117, N'Pants Co.', CAST(N'2018-06-07' AS Date), 20)
+INSERT [dbo].[Shipment] ([ProductNumber], [CompanyID], [CompanyName], [DateOfOrder], [NumberOfUnits]) VALUES (102, 118, N'Old Navy', CAST(N'2019-04-10' AS Date), 10)
+SET IDENTITY_INSERT [dbo].[Supplier] ON 
+
+INSERT [dbo].[Supplier] ([CompanyID], [CompanyName], [Street], [City], [State], [ZipCode], [PhoneNumber]) VALUES (115, N'Clothes Co.', N'1234 Street Street', N'Tampa', N'FL', N'33613', N'(111) 323-1234')
+INSERT [dbo].[Supplier] ([CompanyID], [CompanyName], [Street], [City], [State], [ZipCode], [PhoneNumber]) VALUES (116, N'Shirts Co.', N'2222 Road Street', N'Tampa', N'FL', N'33613', N'(123) 444-1234')
+INSERT [dbo].[Supplier] ([CompanyID], [CompanyName], [Street], [City], [State], [ZipCode], [PhoneNumber]) VALUES (117, N'Pants Co.', N'1678 Lane Street', N'Clearwater', N'FL', N'33761', N'(101) 234-0987')
+INSERT [dbo].[Supplier] ([CompanyID], [CompanyName], [Street], [City], [State], [ZipCode], [PhoneNumber]) VALUES (118, N'Old Navy', N'1338 Lane Street', N'Clearwater', N'FL', N'33761', N'(141) 555-0987')
+SET IDENTITY_INSERT [dbo].[Supplier] OFF
+/****** Object:  Index [PK_Customer_CustomerNo]    Script Date: 4/10/2019 11:40:01 PM ******/
 ALTER TABLE [dbo].[Customer] ADD  CONSTRAINT [PK_Customer_CustomerNo] PRIMARY KEY NONCLUSTERED 
 (
 	[CustomerNumber] ASC
 )WITH (PAD_INDEX = OFF, STATISTICS_NORECOMPUTE = OFF, SORT_IN_TEMPDB = OFF, IGNORE_DUP_KEY = OFF, ONLINE = OFF, ALLOW_ROW_LOCKS = ON, ALLOW_PAGE_LOCKS = ON) ON [PRIMARY]
 GO
-/****** Object:  Index [PK_Employee_EmpID]    Script Date: 4/10/2019 11:04:42 PM ******/
+/****** Object:  Index [PK_Employee_EmpID]    Script Date: 4/10/2019 11:40:01 PM ******/
 ALTER TABLE [dbo].[Employee] ADD  CONSTRAINT [PK_Employee_EmpID] PRIMARY KEY NONCLUSTERED 
 (
 	[EmployeeID] ASC
 )WITH (PAD_INDEX = OFF, STATISTICS_NORECOMPUTE = OFF, SORT_IN_TEMPDB = OFF, IGNORE_DUP_KEY = OFF, ONLINE = OFF, ALLOW_ROW_LOCKS = ON, ALLOW_PAGE_LOCKS = ON) ON [PRIMARY]
 GO
-/****** Object:  Index [PK_HourlyEm_EmpID]    Script Date: 4/10/2019 11:04:42 PM ******/
+/****** Object:  Index [PK_HourlyEm_EmpID]    Script Date: 4/10/2019 11:40:01 PM ******/
 ALTER TABLE [dbo].[HourlyEmployee] ADD  CONSTRAINT [PK_HourlyEm_EmpID] PRIMARY KEY NONCLUSTERED 
 (
 	[EmployeeID] ASC
 )WITH (PAD_INDEX = OFF, STATISTICS_NORECOMPUTE = OFF, SORT_IN_TEMPDB = OFF, IGNORE_DUP_KEY = OFF, ONLINE = OFF, ALLOW_ROW_LOCKS = ON, ALLOW_PAGE_LOCKS = ON) ON [PRIMARY]
 GO
-/****** Object:  Index [PK__Product__49A3C839F988B1AB]    Script Date: 4/10/2019 11:04:42 PM ******/
+/****** Object:  Index [PK__Product__49A3C839F988B1AB]    Script Date: 4/10/2019 11:40:01 PM ******/
 ALTER TABLE [dbo].[Product] ADD  CONSTRAINT [PK__Product__49A3C839F988B1AB] PRIMARY KEY NONCLUSTERED 
 (
 	[ProductNumber] ASC
 )WITH (PAD_INDEX = OFF, STATISTICS_NORECOMPUTE = OFF, SORT_IN_TEMPDB = OFF, IGNORE_DUP_KEY = OFF, ONLINE = OFF, ALLOW_ROW_LOCKS = ON, ALLOW_PAGE_LOCKS = ON) ON [PRIMARY]
 GO
-/****** Object:  Index [PK_SalaryEmp_EmpID]    Script Date: 4/10/2019 11:04:42 PM ******/
+/****** Object:  Index [PK_SalaryEmp_EmpID]    Script Date: 4/10/2019 11:40:01 PM ******/
 ALTER TABLE [dbo].[SalaryEmployee] ADD  CONSTRAINT [PK_SalaryEmp_EmpID] PRIMARY KEY NONCLUSTERED 
 (
 	[EmployeeID] ASC
 )WITH (PAD_INDEX = OFF, STATISTICS_NORECOMPUTE = OFF, SORT_IN_TEMPDB = OFF, IGNORE_DUP_KEY = OFF, ONLINE = OFF, ALLOW_ROW_LOCKS = ON, ALLOW_PAGE_LOCKS = ON) ON [PRIMARY]
 GO
-/****** Object:  Index [PK_SalesRep_EmpID]    Script Date: 4/10/2019 11:04:42 PM ******/
+/****** Object:  Index [PK_SalesRep_EmpID]    Script Date: 4/10/2019 11:40:01 PM ******/
 ALTER TABLE [dbo].[SalesRepresentative] ADD  CONSTRAINT [PK_SalesRep_EmpID] PRIMARY KEY NONCLUSTERED 
 (
 	[EmployeeID] ASC
 )WITH (PAD_INDEX = OFF, STATISTICS_NORECOMPUTE = OFF, SORT_IN_TEMPDB = OFF, IGNORE_DUP_KEY = OFF, ONLINE = OFF, ALLOW_ROW_LOCKS = ON, ALLOW_PAGE_LOCKS = ON) ON [PRIMARY]
 GO
-/****** Object:  Index [PK__Supplier__2D971C4DF36BF768]    Script Date: 4/10/2019 11:04:42 PM ******/
+/****** Object:  Index [PK__Supplier__2D971C4DF36BF768]    Script Date: 4/10/2019 11:40:01 PM ******/
 ALTER TABLE [dbo].[Supplier] ADD  CONSTRAINT [PK__Supplier__2D971C4DF36BF768] PRIMARY KEY NONCLUSTERED 
 (
 	[CompanyID] ASC
@@ -363,7 +394,7 @@ ALTER TABLE [dbo].[Order]  WITH CHECK ADD  CONSTRAINT [CK_OrderDate_CurrentDate]
 GO
 ALTER TABLE [dbo].[Order] CHECK CONSTRAINT [CK_OrderDate_CurrentDate]
 GO
-ALTER TABLE [dbo].[Supplier]  WITH CHECK ADD  CONSTRAINT [CK_Supplier_PhoneNumber] CHECK  (([PhoneNumber] like '([0-9][0-9][0-9]) [0-9][0-9][0-9]-[0-9][0-9][0-9][0-9])'))
+ALTER TABLE [dbo].[Supplier]  WITH CHECK ADD  CONSTRAINT [CK_Supplier_PhoneNumber] CHECK  (([PhoneNumber] like '([0-9][0-9][0-9]) [0-9][0-9][0-9]-[0-9][0-9][0-9][0-9]'))
 GO
 ALTER TABLE [dbo].[Supplier] CHECK CONSTRAINT [CK_Supplier_PhoneNumber]
 GO
@@ -374,6 +405,33 @@ GO
 ALTER TABLE [dbo].[Supplier]  WITH CHECK ADD  CONSTRAINT [CK_Supplier_ZipCode] CHECK  (([ZipCode] like '[0-9][0-9][0-9][0-9][0-9]'))
 GO
 ALTER TABLE [dbo].[Supplier] CHECK CONSTRAINT [CK_Supplier_ZipCode]
+GO
+/****** Object:  StoredProcedure [dbo].[spUnitsShippedSince]    Script Date: 4/10/2019 11:40:01 PM ******/
+SET ANSI_NULLS ON
+GO
+SET QUOTED_IDENTIFIER ON
+GO
+
+CREATE PROC [dbo].[spUnitsShippedSince] 
+AS
+
+--Declare @SinceDate as Jan 01, 2019
+DECLARE @SinceDate date
+SET @SinceDate = '01-01-19';
+
+BEGIN
+
+ SELECT
+   ProductNumber, SUM(Units) 'Units Ordered', ListPrice 'List Price', 
+   SUM(ListPrice * Units) 'Total Cost', [Date] 'Order Date', Company 'Company Name'
+
+ FROM ProductDetails_vw
+ WHERE [Date] >= @SinceDate
+ GROUP BY ProductNumber, ListPrice, [Date], Company
+-- SPROC ordered by total cost of products in descending order
+ ORDER BY [Total Cost] DESC; 
+
+END;
 GO
 EXEC sys.sp_addextendedproperty @name=N'MS_Description', @value=N'R= Sales Rep, H= Hourly, S=Salary' , @level0type=N'SCHEMA',@level0name=N'dbo', @level1type=N'TABLE',@level1name=N'Employee', @level2type=N'CONSTRAINT',@level2name=N'CK_Employee_EmpType'
 GO
